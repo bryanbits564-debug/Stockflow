@@ -156,10 +156,10 @@ section{position:relative;z-index:1}
 .pricing{padding:100px 24px;background:var(--bg2)}
 .pricing-inner{max-width:1000px;margin:0 auto}
 .pricing-header{text-align:center;margin-bottom:56px}
-.pricing-toggle{display:flex;align-items:center;gap:12px;justify-content:center;margin-top:20px;font-size:13px;color:var(--text2)}
-.toggle{width:44px;height:24px;background:var(--accent);border-radius:20px;position:relative;cursor:pointer}
-.toggle-knob{width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform .2s}
-.toggle.annual .toggle-knob{transform:translateX(20px)}
+.pricing-toggle{display:flex;align-items:center;gap:0;justify-content:center;margin-top:24px;background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:50px;padding:5px;width:fit-content;margin-left:auto;margin-right:auto}
+.toggle-option{padding:10px 28px;border-radius:50px;font-size:13px;font-weight:500;cursor:pointer;color:var(--text2);transition:all .2s;position:relative}
+.toggle-option.active{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(59,130,246,0.3)}
+.toggle-option .save-pill{position:absolute;top:-10px;right:-4px;background:var(--green);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;letter-spacing:.3px}
 .save-badge{background:rgba(16,185,129,0.15);color:var(--green);font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;border:1px solid rgba(16,185,129,0.2)}
 .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .plan{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px 28px;position:relative;transition:border-color .2s}
@@ -481,10 +481,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:60px 40px
       <h2 class="section-title">Start free. Upgrade when ready.</h2>
       <p class="section-sub">No hidden fees. No setup costs. Cancel anytime.</p>
       <div class="pricing-toggle">
-        <span>Monthly</span>
-        <div class="toggle annual" id="billing-toggle" onclick="this.classList.toggle('annual');toggleBilling()"></div>
-        <span>Annual</span>
-        <span class="save-badge">Save 20%</span>
+        <div class="toggle-option active" id="toggle-monthly" onclick="setBilling('monthly')">Monthly</div>
+        <div class="toggle-option" id="toggle-annual" onclick="setBilling('annual')">Annual <span class="save-pill">-20%</span></div>
       </div>
     </div>
     <div class="plans">
@@ -611,10 +609,10 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:60px 40px
     <h2 class="cta-title">Your inventory,<br>finally under control.</h2>
     <p class="cta-sub">Join 200+ businesses already using StockFlow Pro. 30 days free — no credit card required.</p>
     <div class="cta-form">
-      <input type="email" class="cta-input" placeholder="Enter your work email">
-      <a href="/app" class="btn btn-primary btn-lg">Start free trial →</a>
+      <input type="email" class="cta-input" placeholder="Enter your work email" id="cta-email">
+      <a href="/app" class="btn btn-primary btn-lg" onclick="handleCTA()">Start free trial →</a>
     </div>
-    <p class="cta-note">30-day free trial · No credit card · Cancel anytime</p>
+    <p class="cta-note">30-day free trial · No credit card · Cancel anytime · Questions? <a href="mailto:Tripperkicks@gmail.com" style="color:var(--text2)">Tripperkicks@gmail.com</a></p>
   </div>
 </section>
 
@@ -623,40 +621,45 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:60px 40px
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
           <div class="nav-logo-icon">SF</div>
-          <span style="font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--text)">StockFlow Pro</span>
+          <span style="font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--text)">StockFlow Pro</span>
         </div>
         <p>Simple, powerful inventory management for growing businesses. Built in the Netherlands. Used across Europe.</p>
+        <div style="margin-top:16px">
+          <a href="mailto:Tripperkicks@gmail.com" style="display:inline-flex;align-items:center;gap:7px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);border-radius:8px;padding:8px 14px;font-size:12px;color:var(--accent);text-decoration:none;transition:all .2s">
+            📧 Tripperkicks@gmail.com
+          </a>
+        </div>
       </div>
       <div class="footer-col">
         <h4>Product</h4>
         <a href="#features">Features</a>
         <a href="#pricing">Pricing</a>
-        <a href="#">Demo</a>
-        <a href="#">Changelog</a>
+        <a href="/app">Try the App</a>
+        <a href="#faq">FAQ</a>
       </div>
       <div class="footer-col">
         <h4>Company</h4>
-        <a href="#">About</a>
-        <a href="#">Blog</a>
-        <a href="#">Careers</a>
-        <a href="#">Contact</a>
+        <a href="#testimonials">Reviews</a>
+        <a href="mailto:Tripperkicks@gmail.com">Contact Us</a>
+        <a href="mailto:Tripperkicks@gmail.com">Support</a>
+        <a href="#faq">Help Center</a>
       </div>
       <div class="footer-col">
-        <h4>Support</h4>
-        <a href="#">Help Center</a>
-        <a href="#">Documentation</a>
-        <a href="#">Status</a>
-        <a href="#">Privacy Policy</a>
+        <h4>Legal</h4>
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+        <a href="#cookies">Cookie Policy</a>
+        <a href="mailto:Tripperkicks@gmail.com">Report Issue</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-copy">© 2026 StockFlow Pro. Made with ♥ in the Netherlands.</div>
+      <div class="footer-copy">© 2026 StockFlow Pro. Made with ♥ in the Netherlands. · <a href="mailto:Tripperkicks@gmail.com" style="color:var(--text3);text-decoration:none">Tripperkicks@gmail.com</a></div>
       <div class="footer-links">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">Cookies</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#terms">Terms</a>
+        <a href="mailto:Tripperkicks@gmail.com">Contact</a>
       </div>
     </div>
   </div>
@@ -675,16 +678,25 @@ function toggleFaq(el) {
 }
 
 // Billing toggle
-let isAnnual = true;
+let isAnnual = false;
 const prices = { starter: [29, 23], pro: [79, 63], ent: [149, 119] };
-function toggleBilling() {
-  isAnnual = !isAnnual;
+
+function setBilling(type) {
+  isAnnual = type === 'annual';
+  document.getElementById('toggle-monthly').classList.toggle('active', !isAnnual);
+  document.getElementById('toggle-annual').classList.toggle('active', isAnnual);
   document.getElementById('price-starter').textContent = prices.starter[isAnnual ? 1 : 0];
   document.getElementById('price-pro').textContent = prices.pro[isAnnual ? 1 : 0];
   document.getElementById('price-ent').textContent = prices.ent[isAnnual ? 1 : 0];
   document.querySelectorAll('.plan-period').forEach(el => {
     el.textContent = isAnnual ? 'per month · billed annually' : 'per month · billed monthly';
   });
+}
+
+// CTA handler
+function handleCTA() {
+  const email = document.getElementById('cta-email')?.value;
+  if(email) localStorage.setItem('sf_signup_email', email);
 }
 
 // Smooth nav
